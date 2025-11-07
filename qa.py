@@ -9,7 +9,7 @@ from langchain.chains import RetrievalQA
 
 
 
-os.environ["GROQ_API_KEY"] = "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"  # Change to secure key loading
+os.environ["GROQ_API_KEY"] = "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"  # Change to secure key loading
 
 # PDF Loading and Splitting
 loader = PyPDFLoader("text-2.pdf")
@@ -31,7 +31,7 @@ retriever = vectorstore.as_retriever()
 
 llm = ChatGroq(
     groq_api_key=os.environ["GROQ_API_KEY"],  # Ensure correct API key
-    model="Llama3-8b-8192",  # Check if model is available in Groq
+    model="llama-3.1-8b-instant",  # Check if model is available in Groq
     temperature=0.7  # Adjust as needed
 )
 
@@ -57,4 +57,5 @@ if user_query:
             del answer['source_documents']  # Removes the source documents field
     except Exception as e:
         st.error(f"Error while processing the query: {e}")
+
 
