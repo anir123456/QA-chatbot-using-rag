@@ -9,9 +9,8 @@ from langchain.chains import RetrievalQA
 
 
 
-os.environ["GROQ_API_KEY"] = "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"  # Change to secure key loading
+os.environ["GROQ_API_KEY"] = "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"  
 
-# PDF Loading and Splitting
 loader = PyPDFLoader("text-2.pdf")
 pages = loader.load()
 
@@ -19,13 +18,12 @@ pages = loader.load()
 splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
 docs = splitter.split_documents(pages)
 
-# Initialize Embeddings (Ensure this is using a supported model)
 embeddings = HuggingFaceEmbeddings()
 
 
 vectorstore = Chroma.from_documents(docs, embedding=embeddings)
 
-# Set up retriever for the vector store
+
 retriever = vectorstore.as_retriever()
 
 
@@ -45,7 +43,6 @@ rag_chain = RetrievalQA.from_chain_type(
 
 st.title("Q&A using RAG")
 
-# Input field for the user's query
 user_query = st.text_input("Ask a question about the content in the PDF:")
 
 if user_query:
@@ -57,5 +54,6 @@ if user_query:
             del answer['source_documents']  # Removes the source documents field
     except Exception as e:
         st.error(f"Error while processing the query: {e}")
+
 
 
